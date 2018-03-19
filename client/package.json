@@ -1,0 +1,40 @@
+{
+  "name": "crypto-holdings",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": {"/api/hello": {
+      "target": "http://localhost:5000"
+    }
+  },
+  "dependencies": {
+    "currency-formatter": "^1.4.1",
+    "downloadjs": "^1.4.7",
+    "express": "^4.16.2",
+    "pouchdb": "^6.4.3",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-easy-chart": "^1.0.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.17",
+    "redux": "^3.7.2",
+    "redux-persist": "^5.9.1",
+    "redux-thunk": "^2.2.0",
+    "semantic-ui-css": "^2.2.14",
+    "semantic-ui-react": "^0.78.2",
+    "web3": "^1.0.0-beta.30"
+  },
+  "scripts": {
+    "check-test-coverage": "yarn test -- --coverage",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "server": "node server/app.js"
+  },
+  "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1"
+  }
+}
