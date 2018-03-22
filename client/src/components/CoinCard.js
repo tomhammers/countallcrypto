@@ -47,7 +47,6 @@ const CoinCard = props => {
                       ) / 100}%
                     </span>
                     {' (24h)'}
-                    <a href="/api/hello">Click Me</a>
                   </Header.Subheader>
                 </Header.Content>
               </Header>

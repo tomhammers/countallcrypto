@@ -5,6 +5,7 @@ import { Dropdown } from 'semantic-ui-react';
 import download from 'downloadjs';
 
 import {
+  addPortfolioId,
   getPortfolioCoinPrices,
   importEthereumAddressBalances,
   importPortfolio,
@@ -14,6 +15,8 @@ import { toggleShowModal } from '../actions/showImportEthereumAddressActions';
 import { toggleBalancesShown } from '../actions/balancesShownActions';
 import ImportEthereumAddressModal from '../components/ImportEthereumAddressModal';
 import UploadFileModal from '../components/UploadFileModal';
+
+import portfolioApi from '../api/portfolioApi';
 
 class Menu extends Component {
   state = { showUploadFileModal: false };
@@ -41,6 +44,12 @@ class Menu extends Component {
     await this.props.importPortfolio(portfolio);
     this.props.getPortfolioCoinPrices(portfolio);
     this.setState({ showUploadFileModal: false });
+  };
+
+  savePortfolioOnServer = async () => {
+    const response = await portfolioApi.addPortfolio(this.props.portfolio);
+    this.props.addPortfolioId(response.portfolioId);
+    window.location.hash = response.portfolioId;
   };
 
   toggleShowBalances = () => {
@@ -84,6 +93,12 @@ class Menu extends Component {
               text={toggleBalancesText()}
               onClick={this.toggleShowBalances}
             />
+            {!this.props.portfolio._id ? (
+              <Dropdown.Item
+                text="Get a unique URL"
+                onClick={this.savePortfolioOnServer}
+              />
+            ) : null}
           </Dropdown.Menu>
         </Dropdown>
         <ImportEthereumAddressModal
@@ -113,6 +128,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
+      addPortfolioId,
       getPortfolioCoinPrices,
       importEthereumAddressBalances,
       importPortfolio,

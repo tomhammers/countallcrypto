@@ -128,9 +128,10 @@ class Main extends Component {
         <Grid columns={2} stackable>
           <Grid.Row>
             <Grid.Column>
-              {'Sort by: '}
+              {'Sort by '}
               <Dropdown
-                selection
+                floating
+                inline
                 onChange={(event, { value }) => this.updateSortByOption(value)}
                 options={sortByOptions}
                 value={this.state.sortByOption}

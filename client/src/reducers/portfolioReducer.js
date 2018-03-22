@@ -1,6 +1,11 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
-import { supportedFiatCurrencies, sortByOptionsStrings } from '../common/constants';
+import {
+  supportedFiatCurrencies,
+  sortByOptionsStrings,
+} from '../common/constants';
+
+import portfolioApi from '../api/portfolioApi';
 
 const portfolioReducer = (state = initialState.portfolio, action) => {
   const portfolio = JSON.parse(JSON.stringify(state));
@@ -24,6 +29,9 @@ const portfolioReducer = (state = initialState.portfolio, action) => {
           price: coinPrice[coin.name],
           coinDetails,
         };
+      }
+      if (portfolio._id) {
+        portfolioApi.updatePortfolio(portfolio);
       }
       return portfolio;
 
@@ -50,6 +58,13 @@ const portfolioReducer = (state = initialState.portfolio, action) => {
           }
         }
       });
+      if (portfolio._id) {
+        portfolioApi.updatePortfolio(portfolio);
+      }
+      return portfolio;
+
+    case types.ADD_PORTFOLIO_ID:
+      portfolio._id = action.payload;
       return portfolio;
 
     case types.IMPORT_PORTFOLIO:
@@ -68,10 +83,16 @@ const portfolioReducer = (state = initialState.portfolio, action) => {
         portfolio.coins[key].price = value;
       }
       portfolio.fiatCurrency = action.payload[0];
+      if (portfolio._id) {
+        portfolioApi.updatePortfolio(portfolio);
+      }
       return portfolio;
 
     case types.REMOVE_COIN_FROM_PORTFOLIO:
       delete portfolio.coins[action.payload];
+      if (portfolio._id) {
+        portfolioApi.updatePortfolio(portfolio);
+      }
       return portfolio;
 
     case types.UPDATE_PORTFOLIO_COIN_DETAILS:
@@ -87,6 +108,9 @@ const portfolioReducer = (state = initialState.portfolio, action) => {
           portfolio.coins[coin].coinDetails = coinList[coin];
         }
       }
+      if (portfolio._id) {
+        portfolioApi.updatePortfolio(portfolio);
+      }
       return portfolio;
 
     case types.UPDATE_PORTFOLIO_COIN_PRICES:
@@ -100,10 +124,16 @@ const portfolioReducer = (state = initialState.portfolio, action) => {
       portfolio.coins[action.payload[0]].quantity = parseFloat(
         action.payload[1],
       );
+      if (portfolio._id) {
+        portfolioApi.updatePortfolio(portfolio);
+      }
       return portfolio;
 
     case types.UPDATE_SORT_BY_OPTION:
       portfolio.sortBy = action.payload;
+      if (portfolio._id) {
+        portfolioApi.updatePortfolio(portfolio);
+      }
       return portfolio;
 
     default:

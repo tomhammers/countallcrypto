@@ -59,6 +59,7 @@ class ImportEthereumAddressModal extends Component {
               content="Not a valid Ethereum Address"
             />
           ) : null}
+          <br/>
           <label>What to do with found balances?</label>
           <Dropdown
             fluid
@@ -70,7 +71,6 @@ class ImportEthereumAddressModal extends Component {
             options={addEthereumAddressOptions}
             value={this.state.selectedEthereumAddressOption}
           />
-          0x427C4f29b2885727A22D673b9686dcb0b0BB22C8
         </Modal.Content>
         <Modal.Actions>
           <Button

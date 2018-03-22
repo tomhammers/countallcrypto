@@ -2,7 +2,8 @@
   "name": "crypto-holdings",
   "version": "0.1.0",
   "private": true,
-  "proxy": {"/api/hello": {
+  "proxy": {
+    "/api": {
       "target": "http://localhost:5000"
     }
   },

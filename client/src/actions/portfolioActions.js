@@ -3,6 +3,13 @@ import ethplorerApi from '../api/ethplorerApi';
 import * as types from './actionTypes';
 import { supportedFiatCurrencies } from '../common/constants';
 
+export function addPortfolioId(portfolioId) {
+  return {
+    payload: portfolioId,
+    type: types.ADD_PORTFOLIO_ID,
+  };
+};
+
 const getCoinsInPortfolio = coins => {
   let coinsInPortfolio = [];
 
@@ -183,6 +190,7 @@ function addMultipleCoinsToPortfolio(
 }
 
 export function newPortfolio() {
+  window.location.hash = "";
   return {
     type: types.NEW_PORTFOLIO,
   };
