@@ -11,6 +11,8 @@
 # production
 /client/build
 
+/client/src/semantic
+
 # misc
 .DS_Store
 .env.local

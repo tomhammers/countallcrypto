@@ -10,7 +10,8 @@ import storage from 'redux-persist/lib/storage';
 import reducers from './reducers';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import 'semantic-ui-css/semantic.min.css';
+// import 'semantic-ui-css/semantic.min.css';
+import './semantic/dist/semantic.min.css';
 import './index.css';
 import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';

@@ -1,8 +1,10 @@
-import { sortByOptionsStrings, supportedFiatCurrencies } from '../common/constants';
+import { coinViewOptions, sortByOptionsStrings, supportedFiatCurrencies } from '../common/constants';
 
 export default {
   balancesShown: true,
+  chartShown: true,
   coins: null,
+  coinView: coinViewOptions.coinCards,
   portfolio: {
     fiatCurrency: supportedFiatCurrencies[0],
     sortBy: sortByOptionsStrings.PortfolioPerc,

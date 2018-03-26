@@ -35,14 +35,15 @@ class App extends Component {
         });
       }
     } else {
-      document.title = "Crypto Portfolio";
+      document.title = 'Crypto Portfolio';
     }
   }
 
   render() {
+    const { balancesShown, chartShown } = this.props;
     return (
       <Layout>
-        <CoinTotals />
+        {balancesShown || chartShown ? <CoinTotals /> : null}
         <CoinList />
       </Layout>
     );
@@ -52,6 +53,7 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     balancesShown: state.balancesShown,
+    chartShown: state.chartShown,
     portfolio: state.portfolio,
   };
 }

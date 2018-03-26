@@ -5,6 +5,7 @@ import { Button, Dropdown, Grid, Message } from 'semantic-ui-react';
 
 import AddCoin from '../containers/AddCoin';
 import CoinCard from '../components/CoinCard';
+import CoinTable from '../components/CoinTable';
 import EditCoinQuantityModal from '../components/EditCoinQuantityModal';
 
 import { getCoinList } from '../actions/coinListActions';
@@ -18,7 +19,7 @@ import {
 import { toggleShowModal } from '../actions/showImportEthereumAddressActions';
 
 import { calculatePortfolioBreakdown, sort_by } from '../common/utils';
-import { sortByOptions } from '../common/constants';
+import { coinViewOptions, sortByOptions } from '../common/constants';
 
 class Main extends Component {
   state = {
@@ -35,7 +36,7 @@ class Main extends Component {
     this.interval = setInterval(() => {
       console.log('updating ...........');
       this.props.getPortfolioCoinPrices(this.props.portfolio);
-    }, 10000);
+    }, 15000);
   }
 
   async componentWillMount() {
@@ -67,6 +68,7 @@ class Main extends Component {
       loadingCoinList: false,
       showAddCoinForm: true,
     });
+    this.el.scrollIntoView({ behavior: 'smooth' });
   };
 
   onDeleteClick = coinId => {
@@ -123,10 +125,12 @@ class Main extends Component {
   }
 
   render() {
+    const columns = this.props.coinView === coinViewOptions.coinCards ? 2 : 1;
+
     return (
       <div>
-        <Grid columns={2} stackable>
-          <Grid.Row>
+        <Grid columns={columns} stackable>
+          <Grid.Row style={{ paddingBottom: '0px', paddingTop: '25px' }}>
             <Grid.Column>
               {'Sort by '}
               <Dropdown
@@ -138,7 +142,21 @@ class Main extends Component {
               />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row>{this.renderCards()}</Grid.Row>
+          {this.props.coinView === coinViewOptions.coinCards ? (
+            <Grid.Row>{this.renderCards()}</Grid.Row>
+          ) : null}
+          {this.props.coinView === coinViewOptions.coinTable ? (
+            <Grid.Row>
+              <CoinTable
+                balancesShown={this.props.balancesShown}
+                coinsInPortfolio={this.props.portfolio.coins}
+                fiatCurrency={this.props.portfolio.fiatCurrency}
+                onDeleteClick={this.onDeleteClick}
+                onEditClick={this.onEditClick}
+                portfolioBreakdown={this.state.portfolioBreakdown}
+              />
+            </Grid.Row>
+          ) : null}
           <Grid.Row>
             <Grid.Column width={16}>
               {!this.state.showAddCoinForm ? (
@@ -146,14 +164,15 @@ class Main extends Component {
                   primary
                   loading={this.state.loadingCoinList}
                   onClick={this.onAddCoinClick}
+                  size="large"
                 >
                   Add Coin
                 </Button>
               ) : null}
 
               {this.state.showAddCoinForm ? (
-                <div>
-                  <Message info>
+                <div ref={el => { this.el = el; }}>
+                  <Message>
                     <Message.Content>
                       Search for an individual coin
                     </Message.Content>
@@ -163,7 +182,7 @@ class Main extends Component {
                       this.setState({ showAddCoinForm: false });
                     }}
                   />
-                  <Message info style={{ marginTop: '45px' }}>
+                  <Message style={{ marginTop: '20px' }}>
                     <Message.Content>
                       <p>
                         Or enter an Ethereum Address to automatically import
@@ -200,6 +219,7 @@ function mapStateToProps(state) {
   return {
     balancesShown: state.balancesShown,
     coinList: state.coinList,
+    coinView: state.coinView,
     portfolio: state.portfolio,
   };
 }

@@ -7,8 +7,8 @@ const GrandTotal = props => {
   const { fiatCurrency, portfolioGrandTotal } = props;
   return (
     <div>
-      <Header sub>Portfolio Value</Header>
-      <span style={{ fontSize: '60px' }}>
+      <Header sub>Portfolio Valuation</Header>
+      <span style={{ fontSize: '46px' }}>
         {currencyFormatter.format(portfolioGrandTotal, {
           code: fiatCurrency,
         })}

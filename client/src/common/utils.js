@@ -5,8 +5,11 @@ export const calculateGrandTotal = portfolio => {
   let grandTotal = 0;
 
   Object.keys(coins).map(key => {
-    return (grandTotal +=
-      coins[key].quantity * coins[key].price[fiatCurrency.key].PRICE);
+    if (coins[key].price !== undefined) {
+      return (grandTotal +=
+        coins[key].quantity * coins[key].price[fiatCurrency.key].PRICE);
+    }
+    return null;
   });
   return grandTotal;
 };
@@ -37,11 +40,11 @@ export const calculatePortfolioBreakdown = portfolio => {
 };
 
 // with thanks to stackoverflow https://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects
-export const sort_by = (field) => {
+export const sort_by = field => {
   let sortByField = '';
   let primer = () => {};
   let reverse = true;
-  
+
   if (field === sortByOptionsStrings.PortfolioPerc) {
     sortByField = 'percOfPortfolio';
     primer = parseFloat;
@@ -49,7 +52,9 @@ export const sort_by = (field) => {
   }
   if (field === sortByOptionsStrings.Name) {
     sortByField = 'name';
-    primer = function(a){return a.toUpperCase()};
+    primer = function(a) {
+      return a.toUpperCase();
+    };
   }
   if (field === sortByOptionsStrings.DailyPerc) {
     sortByField = 'changePercent24Hour';

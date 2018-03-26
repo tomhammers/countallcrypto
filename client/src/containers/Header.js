@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Grid, Dropdown } from 'semantic-ui-react';
 
 import Menu from './Menu';
 
-import { supportedFiatCurrencies } from '../common/constants';
 import {
   changePortfolioFiatCurrency,
   getPortfolioCoinPrices,
@@ -13,13 +11,7 @@ import {
 
 class Header extends Component {
   state = {
-    ellipsisDirection: 'ellipsis horizontal',
     selectedCurrency: this.props.portfolio.fiatCurrency,
-  };
-
-  onMouseOverMenu = () => {
-    console.log('object');
-    this.setState({ ellipsisDirection: 'ellipsis vertical' });
   };
 
   updatePortfolioFiatCurrency(newFiatCurrency) {
@@ -31,24 +23,11 @@ class Header extends Component {
 
   render() {
     return (
-      <Grid>
-        <Grid.Row columns={2}>
-          <Grid.Column>
-            <Menu />
-          </Grid.Column>
-          <Grid.Column textAlign="right">
-            <Dropdown
-              selection
-              onChange={(event, { value }) =>
-                this.updatePortfolioFiatCurrency(value)
-              }
-              options={supportedFiatCurrencies}
-              value={this.props.portfolio.fiatCurrency.value}
-              style={{ minWidth: '5em', align: 'right' }}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <Menu
+        updatePortfolioFiatCurrency={value =>
+          this.updatePortfolioFiatCurrency(value)
+        }
+      />
     );
   }
 }

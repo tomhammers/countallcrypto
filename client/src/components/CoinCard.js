@@ -1,10 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown, Grid, Header, Segment, Image } from 'semantic-ui-react';
+import { Grid, Header, Icon, Segment, Image } from 'semantic-ui-react';
 import currencyFormatter from 'currency-formatter';
 
 const CoinCard = props => {
-  const { balancesShown, coinBreakdown, id, portfolio, onDeleteClick, onEditClick } = props;
+  const {
+    balancesShown,
+    coinBreakdown,
+    id,
+    portfolio,
+    onDeleteClick,
+    onEditClick,
+  } = props;
   const { coins, fiatCurrency } = portfolio;
   const coinPercentageColor =
     coins[id].price[fiatCurrency.key].CHANGEPCT24HOUR < 0 ? 'red' : 'green';
@@ -51,17 +58,12 @@ const CoinCard = props => {
                 </Header.Content>
               </Header>
             </Grid.Column>
-            <Grid.Column width={3} floated="right" textAlign="right">
-              <Dropdown direction="left" floating item icon="setting">
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => onEditClick(id)}>
-                    Edit Quantity
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => onDeleteClick(id)}>
-                    Delete
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+            <Grid.Column width={3} textAlign="right">
+              <Icon
+                name="trash"
+                onClick={() => onDeleteClick(id)}
+                style={{ cursor: 'pointer' }}
+              />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row columns={2}>
@@ -73,6 +75,13 @@ const CoinCard = props => {
                     <span>
                       <Header.Subheader>
                         {coins[id].quantity} {coins[id].coinDetails.Name}
+                        <a style={{ cursor: 'pointer' }}>
+                          <Icon
+                            name="edit"
+                            onClick={() => onEditClick(id)}
+                            style={{ marginLeft: '12px', fontColor: 'blue' }}
+                          />
+                        </a>
                       </Header.Subheader>
                       <Header.Subheader>
                         {renderCurrency(
@@ -84,7 +93,7 @@ const CoinCard = props => {
                     </span>
                   ) : null}
                   <br />
-                    {coinBreakdown.percOfPortfolio}% of portfolio
+                  Share: {coinBreakdown.percOfPortfolio}%
                 </Header.Content>
               </Header>
             </Grid.Column>

@@ -9,6 +9,11 @@ export const addEthereumAddressOptions = [
   },
 ];
 
+export const coinViewOptions = {
+  coinCards: 'Cards',
+  coinTable: 'Table',
+};
+
 export const sortByOptions = [
   {
     text: 'Portfolio %',
@@ -27,8 +32,8 @@ export const sortByOptions = [
 export const sortByOptionsStrings = {
   PortfolioPerc: 'Portfolio %',
   Name: 'Name',
-  DailyPerc: '24h %'
-}
+  DailyPerc: '24h %',
+};
 
 export const supportedFiatCurrencies = [
   {
