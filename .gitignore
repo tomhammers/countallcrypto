@@ -11,7 +11,9 @@
 # production
 /client/build
 
-/client/src/semantic
+/client/src/semantic/src
+/client/src/semantic/tasks
+/client/src/semantic/gulpfile.js
 
 # misc
 .DS_Store
