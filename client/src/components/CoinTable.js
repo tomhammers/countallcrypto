@@ -11,8 +11,6 @@ const CoinTable = props => {
     onEditClick,
     portfolioBreakdown,
   } = props;
-  console.log(coinsInPortfolio);
-  console.log(portfolioBreakdown);
 
   const renderCurrency = (amount, fiatCurrency) => {
     const precision = parseFloat(amount) < 0.1 ? 4 : 2;
@@ -31,8 +29,7 @@ const CoinTable = props => {
         return (
           <Table.Row key={coin.key}>
             <Table.Cell verticalAlign="middle">
-              {' '}
-              <Header as="h6" floated="left">
+              <Header as="h6">
                 <Image
                   src={`https://www.cryptocompare.com${
                     coinsInPortfolio[coin.key].coinDetails.ImageUrl
@@ -50,6 +47,14 @@ const CoinTable = props => {
                 coinsInPortfolio[coin.key].price[fiatCurrency.key].PRICE,
                 fiatCurrency.key,
               )}
+              <br />
+              <span style={{ color: coinPercentageColor(coin.key) }}>
+                {Math.round(
+                  coinsInPortfolio[coin.key].price[fiatCurrency.key]
+                    .CHANGEPCT24HOUR * 100,
+                ) / 100}%
+              </span>{' '}
+              (24h)
             </Table.Cell>
             {balancesShown ? (
               <Table.Cell verticalAlign="middle">
@@ -63,10 +68,7 @@ const CoinTable = props => {
                     style={{ marginLeft: '12px', fontColor: 'blue' }}
                   />
                 </a>
-              </Table.Cell>
-            ) : null}
-            {balancesShown ? (
-              <Table.Cell verticalAlign="middle">
+                <br />
                 {renderCurrency(
                   coinsInPortfolio[coin.key].quantity *
                     coinsInPortfolio[coin.key].price[fiatCurrency.key].PRICE,
@@ -74,18 +76,6 @@ const CoinTable = props => {
                 )}
               </Table.Cell>
             ) : null}
-            <Table.Cell verticalAlign="middle">
-              {' '}
-              <span style={{ color: coinPercentageColor(coin.key) }}>
-                {Math.round(
-                  coinsInPortfolio[coin.key].price[fiatCurrency.key]
-                    .CHANGEPCT24HOUR * 100,
-                ) / 100}%
-              </span>
-            </Table.Cell>
-            <Table.Cell verticalAlign="middle">
-              {coin.percOfPortfolio}%
-            </Table.Cell>
             <Table.Cell verticalAlign="middle">
               <Icon
                 name="trash"
@@ -96,12 +86,13 @@ const CoinTable = props => {
           </Table.Row>
         );
       }
+      return null;
     });
   };
 
   return (
     <Grid.Column>
-      <Table celled>
+      <Table celled unstackable={true}>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Name</Table.HeaderCell>
@@ -109,11 +100,6 @@ const CoinTable = props => {
             {balancesShown ? (
               <Table.HeaderCell>Holdings</Table.HeaderCell>
             ) : null}
-            {balancesShown ? (
-              <Table.HeaderCell>Valuation</Table.HeaderCell>
-            ) : null}
-            <Table.HeaderCell>(24h)</Table.HeaderCell>
-            <Table.HeaderCell>Portfolio Share</Table.HeaderCell>
             <Table.HeaderCell />
           </Table.Row>
         </Table.Header>

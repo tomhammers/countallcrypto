@@ -66,8 +66,8 @@ const CoinCard = props => {
               />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row columns={2}>
-            <Grid.Column style={{ paddingLeft: '34px' }}>
+          <Grid.Row columns={1}>
+            <Grid.Column style={{ paddingLeft: '20px' }}>
               <Header as="h6">
                 <Header.Content>
                   Holdings

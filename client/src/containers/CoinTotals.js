@@ -25,10 +25,15 @@ class CoinTotals extends Component {
   }
 
   render() {
-    const columnsCount = this.props.balancesShown && this.props.chartShown ? 2 : 1;
+    const columnsCount =
+      this.props.balancesShown && this.props.chartShown ? 2 : 1;
 
     return (
-      <Segment raised style={{ marginTop: '40px', marginBottom: '40px' }}>
+      <Segment
+        color="yellow"
+        raised
+        style={{ marginTop: '40px', marginBottom: '40px' }}
+      >
         <Grid
           columns={columnsCount}
           stackable

@@ -46,16 +46,17 @@ const portfolioReducer = (state = initialState.portfolio, action) => {
         const quantity = coin.quantity * 1;
         // Should we add coins to existing balance? Else replace coins
         if (isCoinInPortfolio && replaceCoinsInPortfolio === 'Add') {
-          parseFloat((portfolio.coins[coin.name].quantity += quantity));
+          return parseFloat((portfolio.coins[coin.name].quantity += quantity));
         } else {
           // only add coin if we have details for coin
           if (action.payload[2][coin.name] !== undefined) {
-            portfolio.coins[coin.name] = {
+            return portfolio.coins[coin.name] = {
               quantity,
               price: action.payload[1][coin.name],
               coinDetails: action.payload[2][coin.name],
             };
           }
+          return null;
         }
       });
       if (portfolio._id) {

@@ -34,7 +34,6 @@ class Main extends Component {
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      console.log('updating ...........');
       this.props.getPortfolioCoinPrices(this.props.portfolio);
     }, 15000);
   }

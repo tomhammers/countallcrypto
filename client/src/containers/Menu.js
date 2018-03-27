@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Dropdown, Menu } from 'semantic-ui-react';
+import { Responsive } from 'semantic-ui-react';
 import download from 'downloadjs';
-
+// actions
 import {
   addPortfolioId,
   getPortfolioCoinPrices,
@@ -15,12 +15,12 @@ import { toggleShowModal } from '../actions/showImportEthereumAddressActions';
 import { toggleBalancesShown } from '../actions/balancesShownActions';
 import { toggleChartShown } from '../actions/chartShownAction';
 import { toggleCoinView } from '../actions/coinViewActions';
+// components
+import DesktopMenu from '../components/DesktopMenu';
 import ImportEthereumAddressModal from '../components/ImportEthereumAddressModal';
 import UploadFileModal from '../components/UploadFileModal';
 
 import portfolioApi from '../api/portfolioApi';
-
-import { coinViewOptions, supportedFiatCurrencies } from '../common/constants';
 
 class MenuBar extends Component {
   state = { showUploadFileModal: false };
@@ -73,101 +73,38 @@ class MenuBar extends Component {
   };
 
   render() {
-    const toggleBalancesText = () => {
-      if (this.props.balancesShown) {
-        return 'Hide Balances';
-      }
-      return 'Show Balances';
-    };
-
-    const toggleChartText = () => {
-      if (this.props.chartShown) {
-        return 'Hide Chart';
-      }
-      return 'Show Chart';
-    };
-
-    const { updatePortfolioFiatCurrency } = this.props;
+    const {
+      balancesShown,
+      chartShown,
+      coinView,
+      newPortfolio,
+      portfolio,
+      updatePortfolioFiatCurrency,
+      toggleCoinView,
+      toggleShowEtheremAddressModal,
+    } = this.props;
 
     return (
       <div>
-        <Menu secondary>
-          <Dropdown item text="Menu">
-            <Dropdown.Menu>
-              <Dropdown.Item
-                text="New Portfolio"
-                onClick={this.props.newPortfolio}
-              />
-              <Dropdown.Item
-                text="Import Portfolio"
-                onClick={() => this.setState({ showUploadFileModal: true })}
-              />
-              <Dropdown.Item
-                text="Export Portfolio"
-                onClick={this.exportPortfolio}
-              />
-              <Dropdown.Divider />
-              <Dropdown.Item
-                text="Import Ethereum Address"
-                onClick={() => this.props.toggleShowEtheremAddressModal(true)}
-              />
-              {!this.props.portfolio._id ? (
-                <Dropdown.Item
-                  text="Get a unique URL"
-                  onClick={this.savePortfolioOnServer}
-                />
-              ) : null}
-            </Dropdown.Menu>
-          </Dropdown>
-          <Dropdown item simple text="Display Options" className="link item">
-            <Dropdown.Menu>
-              <Dropdown.Item
-                text={toggleBalancesText()}
-                onClick={this.toggleShowBalances}
-              />
-              <Dropdown.Item
-                text={toggleChartText()}
-                onClick={this.toggleShowChart}
-              />
-              <Dropdown.Divider />
-              <Dropdown.Item>
-                <span className="text">Coin List View</span>
-                <i className="triangle right icon" />
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={() =>
-                      this.props.toggleCoinView(coinViewOptions.coinCards)
-                    }
-                  >
-                    Cards
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() =>
-                      this.props.toggleCoinView(coinViewOptions.coinTable)
-                    }
-                  >
-                    Table
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <Dropdown item text="Information">
-            <Dropdown.Menu>
-              <Dropdown.Item>ToDo</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <Menu.Menu position="right">
-            <Dropdown
-              item
-              onChange={(event, { value }) =>
-                updatePortfolioFiatCurrency(value)
-              }
-              options={supportedFiatCurrencies}
-              value={this.props.portfolio.fiatCurrency.value}
-            />
-          </Menu.Menu>
-        </Menu>
+        <Responsive>
+          <DesktopMenu
+            balancesShown={balancesShown}
+            chartShown={chartShown}
+            coinView={coinView}
+            exportPortfolio={this.exportPortfolio}
+            fiatCurrencyValue={portfolio.fiatCurrency.value}
+            newPortfolio={newPortfolio}
+            portfolioId={portfolio._id}
+            showUploadFileModal={() =>
+              this.setState({ showUploadFileModal: true })
+            }
+            toggleCoinView={toggleCoinView}
+            toggleShowBalances={this.toggleShowBalances}
+            toggleShowChart={this.toggleShowChart}
+            toggleShowEtheremAddressModal={toggleShowEtheremAddressModal}
+            updatePortfolioFiatCurrency={updatePortfolioFiatCurrency}
+          />
+        </Responsive>
 
         <ImportEthereumAddressModal
           close={() => this.props.toggleShowEtheremAddressModal(false)}
