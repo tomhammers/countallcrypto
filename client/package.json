@@ -1,5 +1,5 @@
 {
-  "name": "crypto-holdings",
+  "name": "count-all-crypto",
   "version": "0.1.0",
   "private": true,
   "proxy": {
@@ -9,8 +9,6 @@
   },
   "dependencies": {
     "@nivo/bar": "^0.33.0",
-    "@nivo/pie": "^0.33.0",
-    "@nivo/treemap": "^0.33.0",
     "currency-formatter": "^1.4.1",
     "downloadjs": "^1.4.7",
     "express": "^4.16.2",
@@ -18,11 +16,9 @@
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-easy-chart": "^1.0.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
-    "recharts": "^1.0.0-beta.10",
     "redux": "^3.7.2",
     "redux-persist": "^5.9.1",
     "redux-thunk": "^2.2.0",

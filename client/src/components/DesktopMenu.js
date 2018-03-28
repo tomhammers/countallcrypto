@@ -11,6 +11,7 @@ const DesktopMenu = props => {
     fiatCurrencyValue,
     newPortfolio,
     portfolioId,
+    savePortfolioOnServer,
     showUploadFileModal,
     toggleCoinView,
     toggleShowBalances,
@@ -58,7 +59,7 @@ const DesktopMenu = props => {
           {!portfolioId ? (
             <Dropdown.Item
               text="Get a unique URL"
-              onClick={this.savePortfolioOnServer}
+              onClick={savePortfolioOnServer}
             />
           ) : null}
         </Dropdown.Menu>

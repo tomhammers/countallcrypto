@@ -1,7 +1,7 @@
 {
-  "name": "crypto-holdings",
-  "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
+  "name": "count-all-crypto",
+  "version": "0.1.0",
+  "description": "Anonymous crypto portfolio web app",
   "main": "index.js",
   "engines": {
     "node": "9.3.0",
@@ -22,6 +22,7 @@
     "@nivo/bar": "^0.33.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
+    "heroku-ssl-redirect": "0.0.4",
     "nedb": "^1.8.0"
   },
   "devDependencies": {

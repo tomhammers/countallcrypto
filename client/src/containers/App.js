@@ -7,7 +7,10 @@ import CoinList from '../containers/CoinList';
 import CoinTotals from '../containers/CoinTotals';
 import '../styles/App.css';
 
-import { importPortfolio } from '../actions/portfolioActions';
+import {
+  getPortfolioCoinPrices,
+  importPortfolio,
+} from '../actions/portfolioActions';
 
 import portfolioApi from '../api/portfolioApi';
 import { calculateGrandTotal } from '../common/utils';
@@ -27,15 +30,29 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const {
+      balancesShown,
+      chartShown,
+      getPortfolioCoinPrices,
+      portfolio,
+    } = this.props;
+    // put portfolio total in document title
     if (nextProps.balancesShown) {
-      if (nextProps.portfolio !== this.props.portfolio) {
-        const grandTotal = calculateGrandTotal(this.props.portfolio);
+      if (nextProps.portfolio !== portfolio) {
+        const grandTotal = calculateGrandTotal(portfolio);
         document.title = currencyFormatter.format(grandTotal, {
-          code: this.props.portfolio.fiatCurrency.key,
+          code: portfolio.fiatCurrency.key,
         });
       }
     } else {
       document.title = 'Crypto Portfolio';
+    }
+    // when user shows balances / charts again, get current prices
+    if (
+      nextProps.balancesShown !== balancesShown ||
+      nextProps.chartShown !== chartShown
+    ) {
+      getPortfolioCoinPrices(portfolio);
     }
   }
 
@@ -61,6 +78,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
+      getPortfolioCoinPrices,
       importPortfolio,
     },
     dispatch,

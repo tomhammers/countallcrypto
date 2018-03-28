@@ -95,6 +95,7 @@ class MenuBar extends Component {
             fiatCurrencyValue={portfolio.fiatCurrency.value}
             newPortfolio={newPortfolio}
             portfolioId={portfolio._id}
+            savePortfolioOnServer={this.savePortfolioOnServer}
             showUploadFileModal={() =>
               this.setState({ showUploadFileModal: true })
             }
