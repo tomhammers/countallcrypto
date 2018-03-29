@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, Form, Grid, Input, Message, Search } from 'semantic-ui-react';
+import Fuse from 'fuse.js';
 
 import { addCoinToPortfolio } from '../actions/portfolioActions';
 
@@ -56,12 +57,18 @@ class AddCoin extends Component {
       }
       if (value.length < 2) return this.resetSearchComponent();
       if (value.length > 1) {
-        const re = new RegExp(value, 'i');
-        const isMatch = result => re.test(result.title);
-
-        const results = coinOptions
-          .filter(isMatch)
-          .map(result => ({ ...result, key: result.id }));
+        const options = {
+          shouldSort: true,
+          threshold: 0.1,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 2,
+          keys: ['id', 'title'],
+        };
+        
+        const fuse = new Fuse(coinOptions, options); // "list" is the item array
+        const results = fuse.search(value);
 
         this.setState({
           isLoading: false,
@@ -77,6 +84,7 @@ class AddCoin extends Component {
     for (const [key, value] of Object.entries(this.props.coinList)) {
       let option = {
         id: key,
+        key: key,
         title: value.CoinName,
         description: key,
         image: `https://www.cryptocompare.com${value.ImageUrl}`,

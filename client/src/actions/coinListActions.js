@@ -9,9 +9,15 @@ export function getCoinList() {
         dispatch(onCoinListRetrievalSuccess(response.Data));
       })
       .catch(error => {
-        throw error;
+        dispatch(onCoinListRetrievalFailure());
       });
   };
+}
+
+function onCoinListRetrievalFailure() {
+  return {
+    type: types.COINLIST_RESPONSE_FAILURE
+  }
 }
 
 function onCoinListRetrievalSuccess(coinList) {
