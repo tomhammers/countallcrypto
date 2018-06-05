@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Menu from './Menu';
+// import Menu from './Menu';
+import ResponsiveMenu from './ResponsiveMenu';
 
 import {
   changePortfolioFiatCurrency,
@@ -23,7 +24,7 @@ class Header extends Component {
 
   render() {
     return (
-      <Menu
+      <ResponsiveMenu
         updatePortfolioFiatCurrency={value =>
           this.updatePortfolioFiatCurrency(value)
         }

@@ -1,3 +1,58 @@
+export const accentColours = [
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+  {
+    text: 'black',
+    value: 'black',
+  },
+]
+
 export const addEthereumAddressOptions = [
   {
     text: 'Add to existing balances',
@@ -8,6 +63,11 @@ export const addEthereumAddressOptions = [
     value: 'Replace',
   },
 ];
+
+export const chartTypeOptions = {
+  'BarChart': 'Bar Chart',
+  'PieChart': 'Pie Chart',
+}
 
 export const coinViewOptions = {
   coinCards: 'Cards',

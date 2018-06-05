@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -10,7 +9,6 @@ import storage from 'redux-persist/lib/storage';
 import reducers from './reducers';
 import { PersistGate } from 'redux-persist/integration/react';
 
-// import 'semantic-ui-css/semantic.min.css';
 import './semantic/dist/semantic.min.css';
 import './index.css';
 import App from './containers/App';
@@ -34,9 +32,7 @@ const persistor = persistStore(store);
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <App />
     </PersistGate>
   </Provider>,
   document.getElementById('root'),

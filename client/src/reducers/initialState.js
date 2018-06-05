@@ -1,8 +1,14 @@
-import { coinViewOptions, sortByOptionsStrings, supportedFiatCurrencies } from '../common/constants';
+import {
+  chartTypeOptions,
+  coinViewOptions,
+  sortByOptionsStrings,
+  supportedFiatCurrencies,
+} from '../common/constants';
 
 export default {
   balancesShown: true,
   chartShown: true,
+  chartType: chartTypeOptions.PieChart,
   coins: null,
   coinView: coinViewOptions.coinCards,
   portfolio: {

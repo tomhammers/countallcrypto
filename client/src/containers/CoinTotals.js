@@ -32,7 +32,7 @@ class CoinTotals extends Component {
       <Segment
         color="yellow"
         raised
-        style={{ marginTop: '40px', marginBottom: '40px' }}
+        style={{ marginBottom: '40px' }}
       >
         <Grid
           columns={columnsCount}

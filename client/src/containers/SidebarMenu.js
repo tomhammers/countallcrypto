@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Responsive } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Icon, Divider, Menu, Sidebar } from 'semantic-ui-react';
 import download from 'downloadjs';
+import '../styles/SidebarMenu.css';
 // actions
 import {
   addPortfolioId,
@@ -14,16 +16,18 @@ import {
 import { toggleShowModal } from '../actions/showImportEthereumAddressActions';
 import { toggleBalancesShown } from '../actions/balancesShownActions';
 import { toggleChartShown } from '../actions/chartShownAction';
+import { toggleChartType } from '../actions/chartTypeActions';
 import { toggleCoinView } from '../actions/coinViewActions';
 // components
-import DesktopMenu from '../components/DesktopMenu';
+import DisplaySettingsModal from '../components/DisplaySettingsModal';
 import ImportEthereumAddressModal from '../components/ImportEthereumAddressModal';
 import UploadFileModal from '../components/UploadFileModal';
 
 import portfolioApi from '../api/portfolioApi';
+import { chartTypeOptions, coinViewOptions } from '../common/constants';
 
 class MenuBar extends Component {
-  state = { showUploadFileModal: false };
+  state = { showDisplaySettingsModal: false, showUploadFileModal: false };
 
   exportPortfolio = () => {
     download(
@@ -31,6 +35,12 @@ class MenuBar extends Component {
       'portfolio.json',
       'text/plain',
     );
+    this.props.closeMenu();
+  };
+
+  newPortfolio = () => {
+    this.props.newPortfolio();
+    this.props.closeMenu();
   };
 
   onEthereumAddressSubmit = (ethereumAddress, selectedOption) => {
@@ -50,10 +60,16 @@ class MenuBar extends Component {
     this.setState({ showUploadFileModal: false });
   };
 
+  openDisplaySettingsModal = () => {
+    this.setState({ showDisplaySettingsModal: true });
+    this.props.closeMenu();
+  };
+
   savePortfolioOnServer = async () => {
     const response = await portfolioApi.addPortfolio(this.props.portfolio);
     this.props.addPortfolioId(response.portfolioId);
     window.location.hash = response.portfolioId;
+    this.props.closeMenu();
   };
 
   toggleShowBalances = () => {
@@ -72,41 +88,110 @@ class MenuBar extends Component {
     }
   };
 
+  onImportEthAddressClick = () => {
+    this.props.toggleShowEtheremAddressModal(true);
+    this.props.closeMenu();
+  };
+
+  onUploadFileMenuClick = () => {
+    this.setState({ showUploadFileModal: true });
+    this.props.closeMenu();
+  };
+
   render() {
     const {
       balancesShown,
       chartShown,
+      chartType,
       coinView,
       newPortfolio,
       portfolio,
       updatePortfolioFiatCurrency,
+      toggleChartType,
       toggleCoinView,
       toggleShowEtheremAddressModal,
     } = this.props;
 
+    console.log(chartType);
+
     return (
       <div>
-        <Responsive>
-          <DesktopMenu
-            balancesShown={balancesShown}
-            chartShown={chartShown}
-            coinView={coinView}
-            exportPortfolio={this.exportPortfolio}
-            fiatCurrencyValue={portfolio.fiatCurrency.value}
-            newPortfolio={newPortfolio}
-            portfolioId={portfolio._id}
-            savePortfolioOnServer={this.savePortfolioOnServer}
-            showUploadFileModal={() =>
-              this.setState({ showUploadFileModal: true })
+        <Sidebar
+          width="wide"
+          as={Menu}
+          animation="push"
+          visible={this.props.visible}
+          inverted
+          vertical
+        >
+          <Menu.Item
+            content={
+              <span>
+                <Icon name="plus" /> New Portfolio
+              </span>
             }
-            toggleCoinView={toggleCoinView}
-            toggleShowBalances={this.toggleShowBalances}
-            toggleShowChart={this.toggleShowChart}
-            toggleShowEtheremAddressModal={toggleShowEtheremAddressModal}
-            updatePortfolioFiatCurrency={updatePortfolioFiatCurrency}
+            name="newPortfolio"
+            onClick={this.newPortfolio}
           />
-        </Responsive>
-
+          <Menu.Item
+            content={
+              <span>
+                <Icon name="folder open" /> Import Portfolio
+              </span>
+            }
+            name="importPortfolio"
+            onClick={this.onUploadFileMenuClick}
+          />
+          <Menu.Item
+            content={
+              <span>
+                <Icon name="download" /> Export Portfolio
+              </span>
+            }
+            name="exportPortfolio"
+            onClick={this.exportPortfolio}
+          />
+          <Menu.Item
+            content={
+              <span>
+                <Icon name="plus square" /> Import Ethereum Address
+              </span>
+            }
+            name="importEthereumAddress"
+            onClick={this.onImportEthAddressClick}
+          />
+          <Divider />
+          <Menu.Item
+            content={
+              <span>
+                <Icon name="cloud" /> Get a unique URL
+              </span>
+            }
+            name="savePortfolioOnServer"
+            onClick={this.savePortfolioOnServer}
+          />
+          <Menu.Item
+            content={
+              <span>
+                <Icon name="image" /> Display Settings
+              </span>
+            }
+            name="displaySettings"
+            onClick={this.openDisplaySettingsModal}
+          />
+        </Sidebar>
+        <DisplaySettingsModal
+          balancesShown={balancesShown}
+          chartShown={chartShown}
+          chartType={chartType}
+          coinView={coinView}
+          close={() => this.setState({ showDisplaySettingsModal: false })}
+          open={this.state.showDisplaySettingsModal}
+          toggleChartType={toggleChartType}
+          toggleCoinView={toggleCoinView}
+          toggleShowBalances={this.toggleShowBalances}
+          toggleShowChart={this.toggleShowChart}
+        />
         <ImportEthereumAddressModal
           close={() => this.props.toggleShowEtheremAddressModal(false)}
           onSubmit={this.onEthereumAddressSubmit}
@@ -126,6 +211,7 @@ function mapStateToProps(state) {
   return {
     balancesShown: state.balancesShown,
     chartShown: state.chartShown,
+    chartType: state.chartType,
     coinList: state.coinList,
     coinView: state.coinView,
     portfolio: state.portfolio,
@@ -143,6 +229,7 @@ function mapDispatchToProps(dispatch) {
       newPortfolio,
       toggleBalancesShown,
       toggleChartShown,
+      toggleChartType,
       toggleCoinView,
       toggleShowEtheremAddressModal: toggleShowModal,
     },
@@ -150,4 +237,7 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuBar);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MenuBar);

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import currencyFormatter from 'currency-formatter';
-import Layout from '../components/Layout';
+
+import FAQ from '../components/FAQ';
+import Layout from '../containers/Layout';
 import CoinList from '../containers/CoinList';
 import CoinTotals from '../containers/CoinTotals';
 import '../styles/App.css';
@@ -58,11 +61,25 @@ class App extends Component {
 
   render() {
     const { balancesShown, chartShown } = this.props;
+
     return (
-      <Layout>
-        {balancesShown || chartShown ? <CoinTotals /> : null}
-        <CoinList />
-      </Layout>
+      <Router>
+        <Layout>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <div>
+                  {balancesShown || chartShown ? <CoinTotals /> : null}
+                  <CoinList />
+                </div>
+              )}
+            />
+            <Route exact path="/faq" component={FAQ} />
+          </Switch>
+        </Layout>
+      </Router>
     );
   }
 }

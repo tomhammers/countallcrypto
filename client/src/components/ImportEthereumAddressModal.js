@@ -28,7 +28,6 @@ class ImportEthereumAddressModal extends Component {
   };
 
   resetComponent = () => {
-    console.log('reset');
     this.setState({ errorMessage: false, ethereumAddress: '', loading: false });
   };
 
