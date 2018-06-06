@@ -109,6 +109,7 @@ class Main extends Component {
       if (coinsInPortfolio[coin.key] !== undefined) {
         return (
           <CoinCard
+            color={this.props.accentColour}
             balancesShown={this.props.balancesShown}
             key={coin.key}
             id={coin.key}
@@ -216,6 +217,7 @@ class Main extends Component {
 
 function mapStateToProps(state) {
   return {
+    accentColour: state.accentColour,
     balancesShown: state.balancesShown,
     coinList: state.coinList,
     coinView: state.coinView,

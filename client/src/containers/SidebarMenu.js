@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Icon, Divider, Menu, Sidebar } from 'semantic-ui-react';
 import download from 'downloadjs';
 import '../styles/SidebarMenu.css';
@@ -13,6 +13,7 @@ import {
   importPortfolio,
   newPortfolio,
 } from '../actions/portfolioActions';
+import { updateAccentColour } from '../actions/accentColourActions';
 import { toggleShowModal } from '../actions/showImportEthereumAddressActions';
 import { toggleBalancesShown } from '../actions/balancesShownActions';
 import { toggleChartShown } from '../actions/chartShownAction';
@@ -24,7 +25,6 @@ import ImportEthereumAddressModal from '../components/ImportEthereumAddressModal
 import UploadFileModal from '../components/UploadFileModal';
 
 import portfolioApi from '../api/portfolioApi';
-import { chartTypeOptions, coinViewOptions } from '../common/constants';
 
 class MenuBar extends Component {
   state = { showDisplaySettingsModal: false, showUploadFileModal: false };
@@ -100,19 +100,15 @@ class MenuBar extends Component {
 
   render() {
     const {
+      accentColour,
       balancesShown,
       chartShown,
       chartType,
       coinView,
-      newPortfolio,
-      portfolio,
-      updatePortfolioFiatCurrency,
       toggleChartType,
       toggleCoinView,
-      toggleShowEtheremAddressModal,
+      updateAccentColour,
     } = this.props;
-
-    console.log(chartType);
 
     return (
       <div>
@@ -181,6 +177,7 @@ class MenuBar extends Component {
           />
         </Sidebar>
         <DisplaySettingsModal
+          accentColour={accentColour}
           balancesShown={balancesShown}
           chartShown={chartShown}
           chartType={chartType}
@@ -191,6 +188,7 @@ class MenuBar extends Component {
           toggleCoinView={toggleCoinView}
           toggleShowBalances={this.toggleShowBalances}
           toggleShowChart={this.toggleShowChart}
+          updateAccentColour={updateAccentColour}
         />
         <ImportEthereumAddressModal
           close={() => this.props.toggleShowEtheremAddressModal(false)}
@@ -209,12 +207,12 @@ class MenuBar extends Component {
 
 function mapStateToProps(state) {
   return {
+    accentColour: state.accentColour,
     balancesShown: state.balancesShown,
     chartShown: state.chartShown,
     chartType: state.chartType,
     coinList: state.coinList,
     coinView: state.coinView,
-    portfolio: state.portfolio,
     showImportEthereumAddressModal: state.showImportEthereumAddressModal,
   };
 }
@@ -232,6 +230,7 @@ function mapDispatchToProps(dispatch) {
       toggleChartType,
       toggleCoinView,
       toggleShowEtheremAddressModal: toggleShowModal,
+      updateAccentColour,
     },
     dispatch,
   );

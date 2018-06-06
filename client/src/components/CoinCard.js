@@ -7,6 +7,7 @@ const CoinCard = props => {
   const {
     balancesShown,
     coinBreakdown,
+    color,
     id,
     portfolio,
     onDeleteClick,
@@ -24,7 +25,7 @@ const CoinCard = props => {
   return (
     <Grid.Column>
       <Segment
-        color="yellow"
+        color={color}
         padded
         raised
         style={{ marginTop: '5px', marginBottom: '5px' }}

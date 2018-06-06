@@ -11,22 +11,9 @@ import {
 } from 'semantic-ui-react';
 import '../styles/Layout.css';
 // actions
-import {
-  addPortfolioId,
-  changePortfolioFiatCurrency,
-  getPortfolioCoinPrices,
-  importEthereumAddressBalances,
-  importPortfolio,
-  newPortfolio,
-} from '../actions/portfolioActions';
-import { toggleShowModal } from '../actions/showImportEthereumAddressActions';
-import { toggleBalancesShown } from '../actions/balancesShownActions';
-import { toggleChartShown } from '../actions/chartShownAction';
-import { toggleChartType } from '../actions/chartTypeActions';
-import { toggleCoinView } from '../actions/coinViewActions';
+import { changePortfolioFiatCurrency } from '../actions/portfolioActions';
 
 import SidebarMenu from './SidebarMenu';
-
 import { supportedFiatCurrencies } from '../common/constants';
 
 class Layout extends Component {
@@ -36,18 +23,7 @@ class Layout extends Component {
   }
 
   render() {
-    const {
-      balancesShown,
-      chartShown,
-      chartType,
-      coinView,
-      newPortfolio,
-      portfolio,
-      updatePortfolioFiatCurrency,
-      toggleChartType,
-      toggleCoinView,
-      toggleShowEtheremAddressModal,
-    } = this.props;
+    const { portfolio } = this.props;
 
     return (
       <Container>
@@ -86,42 +62,20 @@ class Layout extends Component {
 
 function mapStateToProps(state) {
   return {
-    balancesShown: state.balancesShown,
-    chartShown: state.chartShown,
-    chartType: state.chartType,
-    coinList: state.coinList,
-    coinView: state.coinView,
     portfolio: state.portfolio,
-    showImportEthereumAddressModal: state.showImportEthereumAddressModal,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addPortfolioId,
       changePortfolioFiatCurrency,
-      getPortfolioCoinPrices,
-      importEthereumAddressBalances,
-      importPortfolio,
-      newPortfolio,
-      toggleBalancesShown,
-      toggleChartShown,
-      toggleChartType,
-      toggleCoinView,
-      toggleShowEtheremAddressModal: toggleShowModal,
     },
     dispatch,
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
-
-// export default props => {
-//   return (
-//     <Container>
-//       <Header />
-//       {props.children}
-//     </Container>
-//   );
-// };
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Layout);

@@ -1,55 +1,55 @@
 export const accentColours = [
   {
-    text: 'black',
+    text: 'Black',
     value: 'black',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Blue',
+    value: 'blue',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Brown',
+    value: 'brown',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Green',
+    value: 'green',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Grey',
+    value: 'grey',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Olive',
+    value: 'olive',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Orange',
+    value: 'orange',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Pink',
+    value: 'pink',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Purple',
+    value: 'purple',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Red',
+    value: 'red',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Violet',
+    value: 'violet',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'Yellow',
+    value: 'yellow',
   },
   {
-    text: 'black',
-    value: 'black',
+    text: 'None',
+    value: null,
   },
 ]
 

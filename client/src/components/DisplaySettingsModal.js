@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Dropdown, Checkbox, Modal } from 'semantic-ui-react';
 
-import { chartTypeOptions, coinViewOptions } from '../common/constants';
+import { accentColours, chartTypeOptions, coinViewOptions } from '../common/constants';
 
 const graphOptions = [];
 const coinOptions = [];
@@ -15,6 +15,7 @@ for (let key in coinViewOptions) {
 }
 
 const DisplaySettingsModal = ({
+  accentColour,
   balancesShown,
   chartShown,
   chartType,
@@ -25,6 +26,7 @@ const DisplaySettingsModal = ({
   toggleCoinView,
   toggleShowBalances,
   toggleShowChart,
+  updateAccentColour,
 }) => (
   <Modal open={open}>
     <Modal.Header>Display Settings</Modal.Header>
@@ -61,6 +63,16 @@ const DisplaySettingsModal = ({
         onChange={(event, { value }) => toggleCoinView(value)}
         options={coinOptions}
         value={coinView}
+      />
+      <br />
+      <label>Accent colour:</label>
+      <Dropdown
+        fluid
+        labeled
+        selection
+        onChange={(event, { value }) => updateAccentColour(value)}
+        options={accentColours}
+        value={accentColour}
       />
     </Modal.Content>
     <Modal.Actions>

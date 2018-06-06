@@ -30,7 +30,7 @@ class CoinTotals extends Component {
 
     return (
       <Segment
-        color="yellow"
+        color={this.props.accentColour}
         raised
         style={{ marginBottom: '40px' }}
       >
@@ -39,9 +39,9 @@ class CoinTotals extends Component {
           stackable
           style={{ paddingTop: '20px', paddingBottom: '20px' }}
         >
-          <Grid.Row textAlign="center" verticalAlign="middle">
+          <Grid.Row>
             {this.props.balancesShown ? (
-              <Grid.Column>
+              <Grid.Column style={{ paddingTop: '20px', paddingLeft: '40px' }}>
                 <GrandTotal
                   portfolioGrandTotal={this.state.grandTotal}
                   fiatCurrency={this.props.portfolio.fiatCurrency.key}
@@ -64,6 +64,7 @@ class CoinTotals extends Component {
 
 function mapStateToProps(state) {
   return {
+    accentColour: state.accentColour,
     balancesShown: state.balancesShown,
     chartShown: state.chartShown,
     portfolio: state.portfolio,

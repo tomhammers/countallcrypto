@@ -1,4 +1,5 @@
 import {
+  accentColours,
   chartTypeOptions,
   coinViewOptions,
   sortByOptionsStrings,
@@ -6,6 +7,7 @@ import {
 } from '../common/constants';
 
 export default {
+  accentColour: accentColours[11].value,
   balancesShown: true,
   chartShown: true,
   chartType: chartTypeOptions.PieChart,
