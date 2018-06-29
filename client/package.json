@@ -28,6 +28,7 @@
     "redux-thunk": "^2.2.0",
     "semantic-ui-css": "^2.2.14",
     "semantic-ui-react": "^0.78.2",
+    "string.prototype.endswith": "^0.2.0",
     "web3": "^1.0.0-beta.30"
   },
   "scripts": {

@@ -73,7 +73,7 @@ class PortfolioChart extends Component {
             margin={{
               top: 0,
               right: 0,
-              bottom: 0,
+              bottom: 70,
               left: 0,
             }}
             innerRadius={0.5}
